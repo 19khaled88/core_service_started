@@ -1,11 +1,12 @@
-import { PrismaClient, AcademicSemester,Prisma } from '@prisma/client';
+import {  AcademicSemester, Prisma } from '@prisma/client';
 import { IGenericResponse } from '../../../interfaces/common';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import { IAcademicSemesterFilter } from './interface';
 import { AcademicSemesterConstants } from './constants';
+import prisma from '../../../shared/prisma';
 
-const prisma = new PrismaClient();
+
 
 const createAcademicSemester = async (
     insertData: AcademicSemester
@@ -21,38 +22,41 @@ const getAllAcademicSemester = async (
     options: IPaginationOptions
 ): Promise<IGenericResponse<AcademicSemester[]>> => {
     const { searchTerm, ...filterData } = filters
-    const { page, limit, skip, sortBy, sortOrder } = paginationHelpers.calculatePagination(options)
-    
-    const andCondition =[]
+    const { page, limit, skip } = paginationHelpers.calculatePagination(options)
 
-    if(searchTerm){
+    const andCondition = []
+
+    if (searchTerm) {
         andCondition.push({
-            OR:AcademicSemesterConstants.map((field)=>({
-                [field]:{
-                    contains:searchTerm,
-                    mode:'insensitive'
+            OR: AcademicSemesterConstants.map((field) => ({
+                [field]: {
+                    contains: searchTerm,
+                    mode: 'insensitive'
                 }
             }))
         })
     }
 
-    if(Object.keys(filterData).length > 0){
+    if (Object.keys(filterData).length > 0) {
         andCondition.push({
-            AND: Object.keys(filterData).map((key)=>({
-                [key] :{
-                    equals:(filterData as any)[key]
+            AND: Object.keys(filterData).map((key) => ({
+                [key]: {
+                    equals: (filterData as any)[key]
                 }
             }))
         })
     }
-  
 
-    const whereCondition:Prisma.AcademicSemesterWhereInput = andCondition.length > 0 ? {AND:andCondition} : {}
+
+    const whereCondition: Prisma.AcademicSemesterWhereInput = andCondition.length > 0 ? { AND: andCondition } : {}
 
     const result = await prisma.academicSemester.findMany({
-        where:whereCondition,
+        where: whereCondition,
         skip,
-        take: limit
+        take: limit,
+        orderBy: options.sortBy && options.sortOrder ? {
+            [options.sortBy]: options.sortOrder
+        } : { createAt: 'asc' }
     });
 
     const total = await prisma.academicSemester.count();
@@ -67,7 +71,39 @@ const getAllAcademicSemester = async (
     };
 };
 
+const getSingleAcademicSemester=async(id:string):Promise<AcademicSemester | null>=>{
+    const result =await prisma.academicSemester.findUnique({
+        where:{
+            id:id
+        }
+    })
+    return result
+}
+
+const updateAcademicSemester=async(payload:Partial<AcademicSemester>,id:string):Promise<AcademicSemester>=>{
+    const result =await prisma.academicSemester.update({
+        where:{
+            id:id
+        },
+        data:payload
+        
+    })
+    return result
+}
+
+const deleteAcademicSemester=async(id:string):Promise<AcademicSemester>=>{
+    const result =await prisma.academicSemester.delete({
+        where:{
+            id:id
+        }
+    })
+    return result
+}
+
 export const AcademicSemesterService = {
     createAcademicSemester,
-    getAllAcademicSemester
+    getAllAcademicSemester,
+    getSingleAcademicSemester,
+    updateAcademicSemester,
+    deleteAcademicSemester
 };
