@@ -1,0 +1,1 @@
+export const AcademicSemesterConstants =['title','code','startMonth','endMonth']

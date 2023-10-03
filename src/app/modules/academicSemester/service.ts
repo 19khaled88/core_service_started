@@ -1,14 +1,73 @@
-import { PrismaClient,AcademicSemester } from "@prisma/client";
+import { PrismaClient, AcademicSemester,Prisma } from '@prisma/client';
+import { IGenericResponse } from '../../../interfaces/common';
+import { paginationHelpers } from '../../../helpers/paginationHelper';
+import { IPaginationOptions } from '../../../interfaces/pagination';
+import { IAcademicSemesterFilter } from './interface';
+import { AcademicSemesterConstants } from './constants';
 
 const prisma = new PrismaClient();
 
-const createAcademicSemester = async(insertData:AcademicSemester):Promise<AcademicSemester>=>{
+const createAcademicSemester = async (
+    insertData: AcademicSemester
+): Promise<AcademicSemester> => {
     const result = await prisma.academicSemester.create({
-        data:insertData
-    })
-    return result
-}
+        data: insertData
+    });
+    return result;
+};
+
+const getAllAcademicSemester = async (
+    filters: IAcademicSemesterFilter,
+    options: IPaginationOptions
+): Promise<IGenericResponse<AcademicSemester[]>> => {
+    const { searchTerm, ...filterData } = filters
+    const { page, limit, skip, sortBy, sortOrder } = paginationHelpers.calculatePagination(options)
+    
+    const andCondition =[]
+
+    if(searchTerm){
+        andCondition.push({
+            OR:AcademicSemesterConstants.map((field)=>({
+                [field]:{
+                    contains:searchTerm,
+                    mode:'insensitive'
+                }
+            }))
+        })
+    }
+
+    if(Object.keys(filterData).length > 0){
+        andCondition.push({
+            AND: Object.keys(filterData).map((key)=>({
+                [key] :{
+                    equals:(filterData as any)[key]
+                }
+            }))
+        })
+    }
+  
+
+    const whereCondition:Prisma.AcademicSemesterWhereInput = andCondition.length > 0 ? {AND:andCondition} : {}
+
+    const result = await prisma.academicSemester.findMany({
+        where:whereCondition,
+        skip,
+        take: limit
+    });
+
+    const total = await prisma.academicSemester.count();
+
+    return {
+        meta: {
+            total,
+            page,
+            limit
+        },
+        data: result
+    };
+};
 
 export const AcademicSemesterService = {
-    createAcademicSemester
-}
+    createAcademicSemester,
+    getAllAcademicSemester
+};
