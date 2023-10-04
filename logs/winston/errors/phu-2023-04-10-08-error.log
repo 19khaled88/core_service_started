@@ -1,0 +1,123 @@
+Wed Oct 04 2023 8:26:21 } [PH] error: No Student found
+Wed Oct 04 2023 8:26:46 } [PH] error: No Student found
+Wed Oct 04 2023 8:27:59 } [PH] error: No Student found
+Wed Oct 04 2023 8:29:19 } [PH] error: No Student found
+Wed Oct 04 2023 8:29:35 } [PH] error: No Student found
+Wed Oct 04 2023 8:32:10 } [PH] error: No Student found
+Wed Oct 04 2023 8:33:20 } [PH] error: 
+Invalid `prisma.student.create()` invocation:
+
+{
+  data: {
+    firstName: "String",
+    lastName: "String",
+    middleName: "String",
+    email: "String",
+    contactNo: "String",
+    gender: "String",
+    bloodGroup: "String",
++   studentId: String
+  }
+}
+
+Argument `studentId` is missing.
+Wed Oct 04 2023 8:35:31 } [PH] error: 
+Invalid `prisma.student.create()` invocation:
+
+{
+  data: {
+    firstName: "String",
+    lastName: "String",
+    middleName: "String",
+    email: "String",
+    contactNo: "String",
+    gender: "String",
+    bloodGroup: "String",
+    studentId: "00001",
++   profileImage: String
+  }
+}
+
+Argument `profileImage` is missing.
+Wed Oct 04 2023 8:39:14 } [PH] error: 
+Invalid `prisma.student.create()` invocation:
+
+{
+  data: {
+    firstName: "String",
+    lastName: "String",
+    middleName: "String",
+    email: "String",
+    contactNo: "String",
+    gender: "String",
+    bloodGroup: "String",
+    studentId: "00001",
++   profileImage: String
+  }
+}
+
+Argument `profileImage` is missing.
+Wed Oct 04 2023 8:42:42 } [PH] error: 
+Invalid `prisma.student.create()` invocation:
+
+{
+  data: {
+    firstName: "String",
+    lastName: "String",
+    middleName: "String",
+    email: "String",
+    contactNo: "String",
+    gender: "String",
+    bloodGroup: "String",
+    studentId: "00001",
++   profileImage: String
+  }
+}
+
+Argument `profileImage` is missing.
+Wed Oct 04 2023 8:43:52 } [PH] error: 
+Invalid `prisma.student.create()` invocation:
+
+{
+  data: {
+    firstName: "String",
+    lastName: "String",
+    middleName: "String",
+    email: "String",
+    profileImage: "String",
+    contactNo: "String",
+    gender: "String",
+    bloodGroup: "String",
+    studentId: "00001",
++   academicFaculty: {
++     create: AcademicFacultyCreateWithoutStudentsInput | AcademicFacultyUncheckedCreateWithoutStudentsInput,
++     connectOrCreate: AcademicFacultyCreateOrConnectWithoutStudentsInput,
++     connect: AcademicFacultyWhereUniqueInput
++   }
+  }
+}
+
+Argument `academicFaculty` is missing.
+Wed Oct 04 2023 8:44:50 } [PH] error: 
+Invalid `prisma.student.create()` invocation:
+
+{
+  data: {
+    firstName: "String",
+    lastName: "String",
+    middleName: "String",
+    email: "String",
+    profileImage: "String",
+    contactNo: "String",
+    gender: "String",
+    bloodGroup: "String",
+    studentId: "00001",
++   academicFaculty: {
++     create: AcademicFacultyCreateWithoutStudentsInput | AcademicFacultyUncheckedCreateWithoutStudentsInput,
++     connectOrCreate: AcademicFacultyCreateOrConnectWithoutStudentsInput,
++     connect: AcademicFacultyWhereUniqueInput
++   }
+  }
+}
+
+Argument `academicFaculty` is missing.

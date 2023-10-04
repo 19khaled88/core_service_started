@@ -1,0 +1,22 @@
+Wed Oct 04 2023 9:41:17 } [PH] error: 
+Invalid `prisma.student.create()` invocation:
+
+{
+  data: {
+    firstName: "String",
+    lastName: "String",
+    middleName: "String",
+    email: "String",
+    contactNo: "String",
+    gender: "String",
+    bloodGroup: "String",
+    studentId: "00001",
++   academicFaculty: {
++     create: AcademicFacultyCreateWithoutStudentsInput | AcademicFacultyUncheckedCreateWithoutStudentsInput,
++     connectOrCreate: AcademicFacultyCreateOrConnectWithoutStudentsInput,
++     connect: AcademicFacultyWhereUniqueInput
++   }
+  }
+}
+
+Argument `academicFaculty` is missing.

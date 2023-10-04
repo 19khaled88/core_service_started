@@ -11,7 +11,7 @@ router.post(
     AcademicSemesterController.createAcademicSemester
 );
 router.get('/getSingle/:id', AcademicSemesterController.getSingleAcademiSemester)
-router.put('/update/:id', AcademicSemesterController.updateAcademicSemester)
+router.put('/update/:id', validateRequest(AcademicValidation.modify),AcademicSemesterController.updateAcademicSemester)
 router.delete('/delete/:id', AcademicSemesterController.deleteAcademicSemester)
 router.get('/getAll', AcademicSemesterController.getAcademicSemester);
 
