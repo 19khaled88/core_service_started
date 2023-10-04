@@ -1,0 +1,1 @@
+export const StudentOptionsQuery =['limit','page','sortBy','sortOrder']

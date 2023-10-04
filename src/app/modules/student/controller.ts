@@ -4,6 +4,8 @@ import sendResponse from "../../../shared/sendResponse";
 import httpStatus from "http-status";
 import catchAsync from "../../../shared/catchAsync";
 import prisma from "../../../shared/prisma";
+import pick from "../../../shared/pick";
+import { StudentOptionsQuery } from "./constants";
 
 const createStudent = async (req: Request, res: Response) => {
 
@@ -18,7 +20,8 @@ const createStudent = async (req: Request, res: Response) => {
 }
 
 const getAllStudent = catchAsync(async (req: Request, res: Response) => {
-    const result = await StudentService.getAllStudent()
+    const options = pick(req.query, StudentOptionsQuery)
+    const result = await StudentService.getAllStudent(options)
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,

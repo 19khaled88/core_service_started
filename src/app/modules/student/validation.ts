@@ -32,7 +32,16 @@ const studentValidation = z.object({
     }),
     bloodGroup: z.string({
       required_error: 'bloodGroup is required or field not match'
-    })
+    }),
+    academicFacultyId: z.string({
+      required_error: 'academicFacultyId is required or field not match'
+    }),
+    academicSemesterId: z.string({
+      required_error: 'academicSemesterId is required or field not match'
+    }),
+    academicDepartmentId: z.string({
+      required_error: 'academicDepartmentId is required or field not match'
+    }),
   })
 });
 export const StudentValidation = {
