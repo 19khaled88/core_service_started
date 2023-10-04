@@ -1,0 +1,1 @@
+export const FacultyOptionsQuery =['limit','page','sortBy','sortOrder']
