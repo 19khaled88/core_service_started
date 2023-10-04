@@ -44,6 +44,7 @@ const getAcademicFaculty =async(academicFacultyId:string):Promise<AcademicFacult
 }
 
 const updateAcademicFaculty =async (payload:Partial<AcademicFaculty>, id:string):Promise<AcademicFaculty> => {
+   
     const result = await prisma.academicFaculty.update({
         where:{
             id:id

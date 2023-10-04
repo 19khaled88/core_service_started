@@ -29,6 +29,7 @@ const createAcademicFaculty =async(req:Request,res:Response)=>{
 const getAcademicFaculties =catchAsync(async(req:Request,res:Response)=>{
     const options = pick(req.query, AcademicFacultyOptionsQuery);
     const result = await AcademicFacultyService.getAcademicFaculties(options)
+    
     sendResponse(res,{
         statusCode:httpStatus.OK,
         success:true,
@@ -39,6 +40,7 @@ const getAcademicFaculties =catchAsync(async(req:Request,res:Response)=>{
 
 const getAcademicFaculty = catchAsync(async(req:Request,res:Response)=>{
     const result = await AcademicFacultyService.getAcademicFaculty(req.params.id)
+    
     sendResponse(res,{
         statusCode:httpStatus.OK,
         success:true,
@@ -49,6 +51,7 @@ const getAcademicFaculty = catchAsync(async(req:Request,res:Response)=>{
 
 const updateAcademicFaculty = catchAsync(async(req:Request,res:Response)=>{
     const result = await AcademicFacultyService.updateAcademicFaculty(req.body,req.params.id)
+   
     sendResponse(res,{
         statusCode:httpStatus.OK,
         success:true,

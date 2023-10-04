@@ -64,6 +64,16 @@
             "date": 1696392014247,
             "name": "E:\\ProgrammingHeroNextLevel\\university-management-core-service-starter\\logs\\winston\\successes\\phu-2023-04-10-10-success.log",
             "hash": "64caa0c73525eebc7a0adce5d83ce7ee85aae9cbf92956d44c172a784ed50641"
+        },
+        {
+            "date": 1696397027698,
+            "name": "E:\\ProgrammingHeroNextLevel\\university-management-core-service-starter\\logs\\winston\\successes\\phu-2023-04-10-11-success.log",
+            "hash": "76b8830016a015237895eb06c35b1cb0ec35fe6eba9037529a3800ac9bc819d5"
+        },
+        {
+            "date": 1696399202529,
+            "name": "E:\\ProgrammingHeroNextLevel\\university-management-core-service-starter\\logs\\winston\\successes\\phu-2023-04-10-12-success.log",
+            "hash": "8be199c60b49d9d0e3fdccbbe70d50e35eb50497a64fdd3a126a764b1632b5f0"
         }
     ],
     "hashType": "sha256"
