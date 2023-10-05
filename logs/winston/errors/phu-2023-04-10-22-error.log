@@ -1,0 +1,38 @@
+Wed Oct 04 2023 22:48:42 } [PH] error: 
+Invalid `prisma.course.create()` invocation:
+
+{
+  data: {
+    title: "Web development course",
+    code: "CSE111",
+    credits: "15"
+             ~~~~
+  }
+}
+
+Invalid value for argument `credits`: premature end of input. Expected ISO-8601 DateTime.
+Wed Oct 04 2023 22:51:50 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+
+Foreign key constraint failed on the field: `CourseToPrerequisit_preRequisiteId_fkey (index)`
+Wed Oct 04 2023 22:56:1 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+
+Foreign key constraint failed on the field: `CourseToPrerequisit_preRequisiteId_fkey (index)`
+Wed Oct 04 2023 22:56:45 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+
+Foreign key constraint failed on the field: `CourseToPrerequisit_preRequisiteId_fkey (index)`
+Wed Oct 04 2023 22:57:22 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+
+Foreign key constraint failed on the field: `CourseToPrerequisit_preRequisiteId_fkey (index)`
+Wed Oct 04 2023 22:58:4 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+
+Foreign key constraint failed on the field: `CourseToPrerequisit_preRequisiteId_fkey (index)`

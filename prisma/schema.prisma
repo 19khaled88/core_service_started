@@ -99,3 +99,50 @@ model Faculty {
 
   @@map("faculties")
 }
+
+model Building {
+  id        String   @id @default(uuid())
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  rooms     Room[]
+
+  @@map("buildings")
+}
+
+model Room {
+  id         String   @id @default(uuid())
+  roomNumber String
+  floor      String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  building   Building @relation(fields: [buildingId], references: [id])
+  buildingId String
+
+  @@map("rooms")
+}
+
+model Course {
+  id                 String                @id @default(uuid())
+  title              String
+  code               String
+  credits            String
+  createdAt          DateTime              @default(now())
+  updatedAt          DateTime              @updatedAt
+  courseBefore       CourseToPrerequisit[] @relation("courseBeforePrequisite")
+  preRequisiteBefore CourseToPrerequisit[] @relation("preRequisiteBeforeCourse")
+
+  @@map("courses")
+}
+
+model CourseToPrerequisit {
+  isDeleted      Boolean @default(false)
+  course         Course @relation(fields: [courseId], references: [id], name: "courseBeforePrequisite")
+  courseId       String
+  preRequisite   Course @relation(fields: [preRequisiteId], references: [id], name: "preRequisiteBeforeCourse")
+  preRequisiteId String
+
+  @@id([courseId, preRequisiteId])
+  @@map("coursetoprerequisit")
+}

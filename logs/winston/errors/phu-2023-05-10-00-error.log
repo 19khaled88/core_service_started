@@ -1,0 +1,35 @@
+Thu Oct 05 2023 0:16:0 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+
+Foreign key constraint failed on the field: `coursetoprerequisit_preRequisiteId_fkey (index)`
+Thu Oct 05 2023 0:25:56 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+
+Foreign key constraint failed on the field: `coursetoprerequisit_preRequisiteId_fkey (index)`
+Thu Oct 05 2023 0:26:19 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+
+Foreign key constraint failed on the field: `coursetoprerequisit_preRequisiteId_fkey (index)`
+Thu Oct 05 2023 0:30:58 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+
+Foreign key constraint failed on the field: `coursetoprerequisit_preRequisiteId_fkey (index)`
+Thu Oct 05 2023 0:32:2 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+
+Foreign key constraint failed on the field: `coursetoprerequisit_preRequisiteId_fkey (index)`
+Thu Oct 05 2023 0:38:1 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+
+Foreign key constraint failed on the field: `coursetoprerequisit_preRequisiteId_fkey (index)`
+Thu Oct 05 2023 0:43:50 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+
+Foreign key constraint failed on the field: `coursetoprerequisit_preRequisiteId_fkey (index)`
