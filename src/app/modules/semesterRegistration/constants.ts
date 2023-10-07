@@ -1,0 +1,1 @@
+export const SemesterRegistrationOptionsQuery =['limit','page','sortBy','sortOrder']

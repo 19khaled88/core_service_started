@@ -13,6 +13,8 @@ import { IGenericErrorMessage } from '../../interfaces/error';
 import { errorlogger } from '../../shared/logger';
 import { Prisma } from '@prisma/client';
 import prismaError from '../../errors/prismaError';
+import handlePrismaValidationError from '../../errors/handlePrismaValidationError';
+import handlePrismaClientError from '../../errors/handlePrismaClientError';
 
 const globalErrorHandler: ErrorRequestHandler = (
   error,
@@ -43,12 +45,21 @@ const globalErrorHandler: ErrorRequestHandler = (
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorMessages = simplifiedError.errorMessages;
-  } else if(error instanceof Prisma.PrismaClientKnownRequestError){
-    const simplifiedError = prismaError(error)
-      statusCode = simplifiedError.statusCode;
-      message = simplifiedError.message,
-      errorMessages = simplifiedError.errorMessages
-
+  } else if (error instanceof Prisma.PrismaClientValidationError) {
+    const simplifiedError = handlePrismaValidationError(error);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+    errorMessages = simplifiedError.errorMessages;
+  } else if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    const simplifiedError = handlePrismaClientError(error);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+    errorMessages = simplifiedError.errorMessages;
+  } else if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    const simplifiedError = prismaError(error);
+    statusCode = simplifiedError.statusCode;
+    (message = simplifiedError.message),
+      (errorMessages = simplifiedError.errorMessages);
   } else if (error instanceof ApiError) {
     statusCode = error?.statusCode;
     message = error.message;
@@ -56,8 +67,8 @@ const globalErrorHandler: ErrorRequestHandler = (
       ? [
           {
             path: '',
-            message: error?.message,
-          },
+            message: error?.message
+          }
         ]
       : [];
   } else if (error instanceof Error) {
@@ -66,8 +77,8 @@ const globalErrorHandler: ErrorRequestHandler = (
       ? [
           {
             path: '',
-            message: error?.message,
-          },
+            message: error?.message
+          }
         ]
       : [];
   }
@@ -76,7 +87,7 @@ const globalErrorHandler: ErrorRequestHandler = (
     success: false,
     message,
     errorMessages,
-    stack: config.env !== 'production' ? error?.stack : undefined,
+    stack: config.env !== 'production' ? error?.stack : undefined
   });
 };
 

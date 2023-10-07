@@ -42,6 +42,7 @@
     "express": "^4.18.2",
     "http-status": "^1.6.2",
     "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.6.0",
     "prisma": "^5.3.1",
     "redis": "^4.6.10",
     "winston": "^3.9.0",

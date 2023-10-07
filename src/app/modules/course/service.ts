@@ -1,4 +1,4 @@
-import { Course } from '@prisma/client';
+import { Course, CourseFaculty } from '@prisma/client';
 import prisma from '../../../shared/prisma';
 import { ICourse } from './interface';
 import ApiError from '../../../errors/ApiError';
@@ -70,11 +70,11 @@ const getAllCourse = async (
     orderBy:
       options.sortBy && options.sortOrder
         ? {
-            [options.sortBy]: options.sortOrder
-          }
+          [options.sortBy]: options.sortOrder
+        }
         : {
-            createdAt: 'asc'
-          }
+          createdAt: 'asc'
+        }
   });
   const total = await prisma.course.count();
   return {
@@ -95,18 +95,6 @@ const getSingleCourse = async (courseId: string): Promise<Course | null> => {
   });
   return result;
 };
-
-// const updateCouse = async (payload: Partial<ICourse>, id: string):Promise<Course> => {
-//   const { preRequisiteCourses, ...courseData } = payload;
-
-//   const result = prisma.course.update({
-//     where: {
-//       id: id
-//     },
-//     data: courseData
-//   });
-//   return result;
-// };
 
 const updateCouse = async (
   payload: Partial<ICourse>,
@@ -164,9 +152,56 @@ const updateCouse = async (
   return updatedCourse;
 };
 
+const assignFaculties = async (
+  payload: string[],
+  id: string
+): Promise<CourseFaculty[]> => {
+  await prisma.courseFaculty.createMany({
+    data: payload.map(facultyId => ({
+      courseId: id,
+      facultyId: facultyId
+    }))
+  });
+
+  const getAssignedFaculties = await prisma.courseFaculty.findMany({
+    where: {
+      courseId: id
+    },
+    include: {
+      faculty: true
+    }
+  });
+  return getAssignedFaculties;
+};
+
+const deleteFaculties = async (
+  payload: string[],
+  id: string
+): Promise<CourseFaculty[]> => {
+  await prisma.courseFaculty.deleteMany({
+    where: {
+      courseId: id,
+      facultyId: {
+        in: payload
+      }
+    }
+  });
+  const getFaculties = await prisma.courseFaculty.findMany({
+    where: {
+      courseId: id
+    },
+    include: {
+      faculty: true
+    }
+  });
+  return getFaculties;
+};
+
 export const CourseService = {
   createCourse,
   getAllCourse,
   getSingleCourse,
-  updateCouse
+  updateCouse,
+  assignFaculties,
+  deleteFaculties
 };
