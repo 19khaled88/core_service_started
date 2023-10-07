@@ -16,6 +16,7 @@ const createCourse = async (
     const result = await transacionClient.course.create({
       data: courseData
     });
+   
     if (!result) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Unable to create course');
     }
@@ -70,11 +71,11 @@ const getAllCourse = async (
     orderBy:
       options.sortBy && options.sortOrder
         ? {
-          [options.sortBy]: options.sortOrder
-        }
+            [options.sortBy]: options.sortOrder
+          }
         : {
-          createdAt: 'asc'
-        }
+            createdAt: 'asc'
+          }
   });
   const total = await prisma.course.count();
   return {

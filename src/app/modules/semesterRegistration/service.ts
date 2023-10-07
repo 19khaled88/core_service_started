@@ -15,12 +15,19 @@ const registerSemester = async (
   const isSemesterRegistrationExist =
     await prisma.semesterRegistration.findFirst({
       where: {
-        OR: [
+        AND: [
           {
-            status: SemesterRegistrationStatus.UPCOMMING
+            academicSemesterId: payload.academicSemesterId
           },
           {
-            status: SemesterRegistrationStatus.ONGOING
+            OR: [
+              {
+                status: SemesterRegistrationStatus.UPCOMMING
+              },
+              {
+                status: SemesterRegistrationStatus.ONGOING
+              }
+            ]
           }
         ]
       }

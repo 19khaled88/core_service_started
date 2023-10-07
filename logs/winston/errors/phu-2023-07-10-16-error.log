@@ -1,0 +1,48 @@
+Sat Oct 07 2023 16:15:48 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+{
+  data: {
+    courseId: "e5621fce-77d8-4be3-84cf-d4158aa0014e",
+    preRequisiteId: undefined,
++   course: {
++     create: CourseCreateWithoutCourseBeforeInput | CourseUncheckedCreateWithoutCourseBeforeInput,
++     connectOrCreate: CourseCreateOrConnectWithoutCourseBeforeInput,
++     connect: CourseWhereUniqueInput
++   }
+  }
+}
+
+Argument `course` is missing.
+Sat Oct 07 2023 16:18:13 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+{
+  data: {
+    courseId: "5e1b08b3-1c09-4304-b2a3-edf7b9f15905",
+    preRequisiteId: undefined,
++   course: {
++     create: CourseCreateWithoutCourseBeforeInput | CourseUncheckedCreateWithoutCourseBeforeInput,
++     connectOrCreate: CourseCreateOrConnectWithoutCourseBeforeInput,
++     connect: CourseWhereUniqueInput
++   }
+  }
+}
+
+Argument `course` is missing.
+Sat Oct 07 2023 16:19:22 } [PH] error: 
+Invalid `prisma.courseToPrerequisit.create()` invocation:
+
+{
+  data: {
+    courseId: "33a2cd1a-16dd-4ba2-abea-012aeb824748",
+    preRequisiteId: undefined,
++   course: {
++     create: CourseCreateWithoutCourseBeforeInput | CourseUncheckedCreateWithoutCourseBeforeInput,
++     connectOrCreate: CourseCreateOrConnectWithoutCourseBeforeInput,
++     connect: CourseWhereUniqueInput
++   }
+  }
+}
+
+Argument `course` is missing.

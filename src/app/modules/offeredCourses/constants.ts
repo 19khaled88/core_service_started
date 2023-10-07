@@ -1,0 +1,1 @@
+export const OfferedCourseOptionsQuery =['limit','page','sortBy','sortOrder']
