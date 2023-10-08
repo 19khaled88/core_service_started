@@ -1,0 +1,1 @@
+export const BuildingOptionsQuery =['limit','page','sortBy','sortOrder']

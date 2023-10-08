@@ -1,0 +1,1 @@
+export const OfferedClassSchedulesOptionsQuery =['limit','page','sortBy','sortOrder']
