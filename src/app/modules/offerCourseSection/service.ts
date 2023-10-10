@@ -17,7 +17,7 @@ const createOfferedCourseSection = async (
             id:payload.offeredCourseId
         }
       })
-      console.log(isExistOfferedCourse)
+    
 
       if(!isExistOfferedCourse){
         throw new ApiError(

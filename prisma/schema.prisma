@@ -16,6 +16,7 @@ model AcademicSemester {
   title                 String
   code                  String
   startMonth            String
+  isCurrent             Boolean                @default(false)
   endMonth              String
   createAt              DateTime               @default(now())
   updatedAt             DateTime               @updatedAt
@@ -43,7 +44,7 @@ model AcademicDepartment {
   createAt  DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  academicFaculty   AcademicFaculty @relation(fields: [academicFacultyId], references: [id])
+  academicFaculty   AcademicFaculty @relation(fields: [academicFacultyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   academicFacultyId String
   students          Student[]
   facultys          Faculty[]
@@ -66,15 +67,16 @@ model Student {
   createAt     DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  academicFaculty   AcademicFaculty @relation(fields: [academicFacultyId], references: [id])
+  academicFaculty   AcademicFaculty @relation(fields: [academicFacultyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   academicFacultyId String
 
-  academicSemester   AcademicSemester @relation(fields: [academicSemesterId], references: [id])
+  academicSemester   AcademicSemester @relation(fields: [academicSemesterId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   academicSemesterId String
 
-  academicDepartment           AcademicDepartment            @relation(fields: [academicDepartmentId], references: [id])
-  academicDepartmentId         String
-  studentSemesterRegistrations StudentSemesterRegistration[]
+  academicDepartment                 AcademicDepartment                  @relation(fields: [academicDepartmentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  academicDepartmentId               String
+  studentSemesterRegistrations       StudentSemesterRegistration[]
+  studentSemesterRegistrationCourses StudentSemesterRegistrationCourse[]
 
   @@map("students")
 }
@@ -94,10 +96,10 @@ model Faculty {
   createAt     DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  academicDepartment   AcademicDepartment @relation(fields: [academicDepartmentId], references: [id])
+  academicDepartment   AcademicDepartment @relation(fields: [academicDepartmentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   academicDepartmentId String
 
-  academicFaculty             AcademicFaculty              @relation(fields: [academicFacultyId], references: [id])
+  academicFaculty             AcademicFaculty              @relation(fields: [academicFacultyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   academicFacultyId           String
   courseFaculties             CourseFaculty[]
   offeredCourseClassSchedules OfferedCourseClassSchedule[]
@@ -122,7 +124,7 @@ model Room {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  building                    Building                     @relation(fields: [buildingId], references: [id])
+  building                    Building                     @relation(fields: [buildingId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   buildingId                  String
   offeredCourseClassSchedules OfferedCourseClassSchedule[]
 
@@ -146,9 +148,9 @@ model Course {
 
 model CourseToPrerequisit {
   isDeleted      Boolean @default(false)
-  course         Course  @relation(fields: [courseId], references: [id], name: "courseBeforePrequisite")
+  course         Course  @relation(fields: [courseId], references: [id], name: "courseBeforePrequisite", onDelete: Cascade, onUpdate: Cascade)
   courseId       String
-  preRequisite   Course  @relation(fields: [preRequisiteId], references: [id], name: "preRequisiteBeforeCourse")
+  preRequisite   Course  @relation(fields: [preRequisiteId], references: [id], name: "preRequisiteBeforeCourse", onDelete: Cascade, onUpdate: Cascade)
   preRequisiteId String
 
   @@id([courseId, preRequisiteId])
@@ -157,10 +159,10 @@ model CourseToPrerequisit {
 
 model CourseFaculty {
   courseId String
-  course   Course @relation(fields: [courseId], references: [id])
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   facultyId String
-  faculty   Faculty @relation(fields: [facultyId], references: [id])
+  faculty   Faculty @relation(fields: [facultyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([courseId, facultyId])
   @@map("course_faculty")
@@ -176,12 +178,13 @@ model SemesterRegistration {
   createdAt DateTime                    @default(now())
   updatedAt DateTime                    @updatedAt
 
-  academicSemesterId           String
-  academicSemester             AcademicSemester              @relation(fields: [academicSemesterId], references: [id])
-  offeredCourses               OfferedCourse[]
-  offeredCourseSections        OfferedCourseSection[]
-  offeredCourseClassSchedules  OfferedCourseClassSchedule[]
-  studentSemesterRegistrations StudentSemesterRegistration[]
+  academicSemesterId                 String
+  academicSemester                   AcademicSemester                    @relation(fields: [academicSemesterId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  offeredCourses                     OfferedCourse[]
+  offeredCourseSections              OfferedCourseSection[]
+  offeredCourseClassSchedules        OfferedCourseClassSchedule[]
+  studentSemesterRegistrations       StudentSemesterRegistration[]
+  studentSemesterRegistrationCourses StudentSemesterRegistrationCourse[]
 
   @@map("semester-registration")
 }
@@ -191,14 +194,15 @@ model OfferedCourse {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   courseId  String
-  course    Course   @relation(fields: [courseId], references: [id])
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   academicDepartmentId String
-  academicDepartment   AcademicDepartment @relation(fields: [academicDepartmentId], references: [id])
+  academicDepartment   AcademicDepartment @relation(fields: [academicDepartmentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  semesterRegistrationId String
-  semesterRegistration   SemesterRegistration   @relation(fields: [semesterRegistrationId], references: [id])
-  offeredCourseSections  OfferedCourseSection[]
+  semesterRegistrationId             String
+  semesterRegistration               SemesterRegistration                @relation(fields: [semesterRegistrationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  offeredCourseSections              OfferedCourseSection[]
+  studentSemesterRegistrationCourses StudentSemesterRegistrationCourse[]
 
   @@map("offered-courses")
 }
@@ -211,11 +215,12 @@ model OfferedCourseSection {
   currentlyEntrolledStudent Int           @default(0)
   title                     String
   offeredCourseId           String
-  offeredCouse              OfferedCourse @relation(fields: [offeredCourseId], references: [id])
+  offeredCouse              OfferedCourse @relation(fields: [offeredCourseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  semesterRegistrationId      String
-  semesterRegistration        SemesterRegistration         @relation(fields: [semesterRegistrationId], references: [id])
-  offeredCourseClassSchedules OfferedCourseClassSchedule[]
+  semesterRegistrationId             String
+  semesterRegistration               SemesterRegistration                @relation(fields: [semesterRegistrationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  offeredCourseClassSchedules        OfferedCourseClassSchedule[]
+  studentSemesterRegistrationCourses StudentSemesterRegistrationCourse[]
 
   @@map("offered_course_section")
 }
@@ -228,13 +233,13 @@ model OfferedCourseClassSchedule {
   endTime                String
   dayOfWeek              WeekDays             @default(SATURDAY)
   offeredCourseSectionId String
-  offeredCourseSection   OfferedCourseSection @relation(fields: [offeredCourseSectionId], references: [id])
+  offeredCourseSection   OfferedCourseSection @relation(fields: [offeredCourseSectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   semesterRegistrationId String
-  semesterRegistration   SemesterRegistration @relation(fields: [semesterRegistrationId], references: [id])
+  semesterRegistration   SemesterRegistration @relation(fields: [semesterRegistrationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   roomId                 String
-  room                   Room                 @relation(fields: [roomId], references: [id])
+  room                   Room                 @relation(fields: [roomId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   facultyId              String
-  faculty                Faculty              @relation(fields: [facultyId], references: [id])
+  faculty                Faculty              @relation(fields: [facultyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("offered_course_class_schedule")
 }
@@ -243,16 +248,33 @@ model StudentSemesterRegistration {
   id                String   @id @default(uuid())
   isConfirmed       Boolean  @default(false)
   totalCreditsTaken Int?     @default(0)
+  isActive          Boolean  @default(true)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
   studentId String
-  student   Student @relation(fields: [studentId], references: [id])
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   semesterRegistrationId String
-  semesterRegistration   SemesterRegistration @relation(fields: [semesterRegistrationId], references: [id])
+  semesterRegistration   SemesterRegistration @relation(fields: [semesterRegistrationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("student_semester_registration")
+}
+
+model StudentSemesterRegistrationCourse {
+  semesterRegistrationId String
+  semesterRegistration   SemesterRegistration @relation(fields: [semesterRegistrationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  studentId              String
+  student                Student              @relation(fields: [studentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  offeredCourseId        String
+  offeredCourse          OfferedCourse        @relation(fields: [offeredCourseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  offeredCourseSectionId String
+  offeredCourseSection   OfferedCourseSection @relation(fields: [offeredCourseSectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+
+  @@id([semesterRegistrationId, studentId, offeredCourseSectionId])
+  @@map("student_semester_registration_course")
 }
 
 enum SemesterRegistrationStatus {

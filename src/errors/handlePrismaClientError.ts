@@ -11,11 +11,27 @@ const handlePrismaClientError =(
     let statusCode = 400;
     
     if(error.code = 'P2025'){
-        message = (error.meta?.cause as string) || 'Record not found!'
+        message = (error.meta?.cause as string) 
         errors = [
             {
                 path:"",
                 message:error.message
+            }
+        ]
+    }else if(error.code = 'P2002'){
+        message=(error.meta?.cause as string) 
+        errors = [
+            {
+                path:"",
+                message:error.message
+            }
+        ]
+    } else {
+        message = 'Record not found!'
+        errors = [
+            {
+                path:"",
+                message:'Record not found'
             }
         ]
     }
