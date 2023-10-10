@@ -1,7 +1,10 @@
 import {
+  Course,
+  OfferedCourse,
   SemesterRegistration,
   SemesterRegistrationStatus,
-  StudentSemesterRegistration
+  StudentSemesterRegistration,
+  StudentSemesterRegistrationCourse
 } from '@prisma/client';
 import prisma from '../../../shared/prisma';
 import ApiError from '../../../errors/ApiError';
@@ -523,15 +526,68 @@ const startNewSemester = async (id: string) => {
       }
     });
 
-    const studentSemesterRegistrations = await transactionClient.studentSemesterRegistration.findMany({
-      where:{
-        semesterRegistration:{
-          id
-        },
-        isConfirmed:true
-      }
-    })
-    console.log(studentSemesterRegistrations)
+    const studentSemesterRegistrations =
+      await transactionClient.studentSemesterRegistration.findMany({
+        where: {
+          semesterRegistration: {
+            id
+          },
+          isConfirmed: true
+        }
+      });
+
+    studentSemesterRegistrations.map(async studentSemesterRegistration => {
+      const studentSemesterRegistrationCourses =
+        await prisma.studentSemesterRegistrationCourse.findMany({
+          where: {
+            semesterRegistration: {
+              id: id
+            },
+            student: {
+              id: studentSemesterRegistration.studentId
+            }
+          },
+          include: {
+            offeredCourse: {
+              include: {
+                course: true
+              }
+            }
+          }
+        });
+      // console.log(studentSemesterRegistrationCourses)
+
+      studentSemesterRegistrationCourses.map(
+        async (
+          item: StudentSemesterRegistrationCourse & {
+            offeredCourse: OfferedCourse & {
+              course: Course;
+            };
+          }
+        ) => {
+          const isExistEnrolledCourse =
+            await prisma.studentEntrolledCourse.findFirst({
+              where: {
+                studentId: item.studentId,
+                courseId: item.offeredCourse.courseId,
+                academicSemesterId: semesterRegistration.academicSemesterId
+              }
+            });
+            if(isExistEnrolledCourse){
+              throw new ApiError(httpStatus.BAD_REQUEST,'Already course enrolled for this student')
+            }
+          const enrolledCourseData = {
+            studentId: item.studentId,
+            courseId: item.offeredCourse.courseId,
+            academicSemesterId: semesterRegistration.academicSemesterId
+          };
+
+          await transactionClient.studentEntrolledCourse.create({
+            data: enrolledCourseData
+          });
+        }
+      );
+    });
   });
 
   return {
